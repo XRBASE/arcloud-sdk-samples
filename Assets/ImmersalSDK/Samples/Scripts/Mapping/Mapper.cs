@@ -574,6 +574,7 @@ namespace Immersal.Samples.Mapping
     {
         public int id;
         public GameObject go;
+        public static UnityAction<Vector3[]> OnMapRecieved;
 
         public override IEnumerator RunJob()
         {
@@ -640,6 +641,8 @@ namespace Immersal.Samples.Mapping
 
                         PointCloudRenderer renderer = go.AddComponent<PointCloudRenderer>();
                         renderer.CreateCloud(vector3Array, num);
+                        OnMapRecieved.Invoke(vector3Array);
+
                         renderer.mapId = mapId;
                         if (!mapper.pcr.ContainsKey(id)) {
                             mapper.pcr.Add(id, renderer);
